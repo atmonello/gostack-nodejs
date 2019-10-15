@@ -19,13 +19,14 @@ function checkProjectTitle(req, res, next) {
   return next();
 }
 
-app.use(express.json());
-
-app.use((req, res, next) => {
+function countRequests(req, res, next) {
   requestCount++;
-  console.log(`Total de requisições: ${requestCount}`);
+  console.log(`Número de requisições: ${requestCount}`);
   return next();
-});
+}
+
+app.use(express.json());
+app.use(countRequests);
 
 app.get('/projects', (req, res) => {
   res.json(Projects);
